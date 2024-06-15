@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-    @Time    : 2024/6/15 14:12
-    @Author  : Liu Zhaoyang 2023233158
-    @File    : utils.py
-    @Project : wikipediaMining
-"""
 from transformers import BertTokenizer, BertModel
 import torch
 import spacy
