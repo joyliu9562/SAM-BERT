@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from transformers import BertTokenizer, BertModel
 import torch
 import spacy
@@ -20,20 +18,18 @@ tokenizer = BertTokenizer.from_pretrained(bert_path)
 
 
 def get_number_of_verbs(sentence:str):
-    text = word_tokenize(sentence) #分词
-    # print([(word,tag) for word,tag in pos_tag(text) if word.isalpha()]) # 查询标注结果
-    return len([(word,tag) for word,tag in pos_tag(text) if 'VB' in tag]) #提取名词和代词
+    text = word_tokenize(sentence)
+    # print([(word,tag) for word,tag in pos_tag(text) if word.isalpha()]) # query the result of taging
+    return len([(word,tag) for word,tag in pos_tag(text) if 'VB' in tag]) # extract N and P
 
 def get_number_of_noun_and_prep(sentence:str):
-    text = word_tokenize(sentence) #分词
-    # print([(word,tag) for word,tag in pos_tag(text) if word.isalpha()]) # 查询标注结果
-    return len([(word,tag) for word,tag in pos_tag(text) if 'NN' in tag or 'PRP' in tag]) #提取名词和代词
+    text = word_tokenize(sentence) #tokenization
+    # print([(word,tag) for word,tag in pos_tag(text) if word.isalpha()]) #  query the result of taging
+    return len([(word,tag) for word,tag in pos_tag(text) if 'NN' in tag or 'PRP' in tag])  # extract N and P
 
 
 def get_graph_of_sentence(doc, style='undirect'):
     """
-    输入的参数一定要是spacy返回的doc对象
-    doc = nlp(sentence)
     :param doc:
     :return:
     """
@@ -56,7 +52,6 @@ def get_graph_of_sentence(doc, style='undirect'):
             node2 = token.head.text
             G.add_edge(node1, node2, tag=token.dep_)
     return G
-
 
 
 def get_the_nearest_verb(G, doc, element):
@@ -211,9 +206,8 @@ def seed_everything(seed=42):
 def contrastive_loss(temp, embedding, label):
     """
     calculate the contrastive loss
-    这里的embedding指的是一个batch
     """
-    # 首先计算WMD矩阵用来代替余弦相似度矩阵
+    # WMD of cosine sim
     # cosine_sim = get_wmd_dist_in_batch(embedding)
     cosine_sim = cosine_similarity(embedding, embedding)
     dis = cosine_sim[~np.eye(cosine_sim.shape[0], dtype=bool)].reshape(cosine_sim.shape[0], -1)
