@@ -21,7 +21,7 @@ class BERTGCNModel(nn.Module):
         self.gcn3 = GATConv(self.bert.config.hidden_size, 512, heads=1)
         self.gcn4 = GATConv(512, gcn_hidden_dim, heads=1)
         self.fc = nn.Linear(gcn_hidden_dim * 2, num_classes)
-        self.dropout = nn.Dropout(0.1)
+        # self.dropout = nn.Dropout(0.1)
 
     def forward(self, input_ids, attention_mask, custom_mask, graph, sub_graph):
         edge_index = graph.edge_index
@@ -41,7 +41,7 @@ class BERTGCNModel(nn.Module):
         # Pass embeddings through GCN layers
         x = self.gcn1(graph_feats, edge_index)
         x = torch.relu(x)
-        x = self.dropout(x)
+        # x = self.dropout(x)
         x = self.gcn2(x, edge_index)
         x = torch.relu(x)
         # x = self.dropout(x)
