@@ -30,6 +30,7 @@ def get_number_of_noun_and_prep(sentence:str):
 
 def get_graph_of_sentence(doc, style='undirect'):
     """
+    construct a graph with nodes are the bert tokens
     :param doc:
     :return:
     """
@@ -66,8 +67,6 @@ def get_the_nearest_verb(G, doc, element):
         verb_dist.append((verb, len(nx.shortest_path(G, source=str(element), target=str(verb)))))
     verb_dist = sorted(verb_dist, key=lambda x: x[1])
     return verb_dist[0]
-
-
 
 
 def get_model_input_of_sentence(sentence):
@@ -135,6 +134,7 @@ def get_all_verb(doc):
 
 
 def get_attention_mask(sentence, triplet):
+    # get attention mask based on the shortest paths among triplet
     sentence = str(sentence).replace('\n', ' ').replace('\xa0', ' ')
     sentence = ' '.join(sentence.split())[:-1].replace('.', ',').replace('\"', '\'') + '.'
     if 'Heavyweight' in sentence:
@@ -236,6 +236,7 @@ def contrastive_loss(temp, embedding, label):
 
 
 def custom_index(custom_mask, edge_index):
+    # genertate edge index, we only use the edge index in GAT, and node features are filled with bert embedding
     size = edge_index.size()[1]
 
     mask = custom_mask[0, :size].bool()
