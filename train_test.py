@@ -12,8 +12,8 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 
 device = 'cuda'
 seed_everything(88)
-train_set = MyOwnDataset_Train(root='./data/unbalance_aug/', start_idx=506, end_idx=2533, file_dic=file_dic)
-test_set = MyOwnDataset_Test(root='./data/unbalance_aug/', start_idx=0, end_idx=506, file_dic=file_dic)
+train_set = MyOwnDataset_Train(root='./data/unbalance_aug/', file_dic=file_dic)
+test_set = MyOwnDataset_Test(root='./data/unbalance_aug/', file_dic=file_dic)
 train_loader = DataLoader(train_set, batch_size=32, shuffle=True)
 test_loader = DataLoader(test_set, batch_size=16, shuffle=False)
 model = BERTGCNModel(24, 256).to(device)
