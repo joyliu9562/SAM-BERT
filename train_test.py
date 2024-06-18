@@ -68,9 +68,6 @@ for epoch in range(50):
         total_labels += list(y.cpu().numpy().reshape(-1))
         # val_loss += loss.item()
     score = accuracy_score(total_labels, total_pred)
-    if score > 0.85:
-        # torch.save(model.state_dict(), './inference_model.pth')
-        statics.append((total_labels, total_pred))
     recision, recall, f1, _ = precision_recall_fscore_support(total_labels, total_pred, average='weighted')
     print(score, recision, recall, f1)
     acc.append((score, recision, recall, f1))
