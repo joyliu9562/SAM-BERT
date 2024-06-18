@@ -24,6 +24,7 @@ class BERTGCNModel(nn.Module):
         # self.dropout = nn.Dropout(0.1)
 
     def forward(self, input_ids, attention_mask, custom_mask, graph, sub_graph):
+        # note that the edge index have been switched since we load the data in dataloader
         edge_index = graph.edge_index
         sub_edge_index = sub_graph.edge_index
         # sub_edge_index = custom_index(custom_mask, edge_index)
