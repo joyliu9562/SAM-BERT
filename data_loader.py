@@ -6,10 +6,10 @@ from utils import get_attention_mask
 
 
 class MyOwnDataset_Train(Dataset):
-    def __init__(self, root, start_idx, end_idx, file_dic, transform=None, pre_transform=None, pre_filter=None):
+    def __init__(self, root, file_dic, transform=None, pre_transform=None, pre_filter=None):
         super().__init__(root, transform, pre_transform, pre_filter)
-        self.start_idx = start_idx
-        self.end_idx = end_idx
+        self.start_idx = 506
+        self.end_idx = 2533
         self.dataset = file_dic
 
     @property
@@ -39,10 +39,10 @@ class MyOwnDataset_Train(Dataset):
         return graph, sub_graph, input_ids, custom_attention_mask, attention_mask
 
 class MyOwnDataset_Test(Dataset):
-    def __init__(self, root, start_idx, end_idx, file_dic, transform=None, pre_transform=None, pre_filter=None):
+    def __init__(self, root, file_dic, transform=None, pre_transform=None, pre_filter=None):
         super().__init__(root, transform, pre_transform, pre_filter)
-        self.start_idx = start_idx
-        self.end_idx = end_idx
+        self.start_idx = 0
+        self.end_idx = 506
         self.dataset = file_dic
 
     @property
