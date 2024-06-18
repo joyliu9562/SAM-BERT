@@ -12,6 +12,9 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 
 device = 'cuda'
 seed_everything(88)
+with open('./data/sentence_idx.pkl', 'rb') as file:
+    # load file dict\
+    file_dic = pickle.load(file)
 train_set = MyOwnDataset_Train(root='./data/unbalance_aug/', file_dic=file_dic)
 test_set = MyOwnDataset_Test(root='./data/unbalance_aug/', file_dic=file_dic)
 train_loader = DataLoader(train_set, batch_size=32, shuffle=True)
