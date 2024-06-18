@@ -15,7 +15,31 @@ nlp = spacy.load('en_core_web_sm')
 bert_path = "/root/data/jupyter/utils/nlp/model_params/bert-base-cased/"
 tokenizer = BertTokenizer.from_pretrained(bert_path)
 
-
+label_dic = {'career': 0,
+ 'birth': 1,
+ 'die': 2,
+ 'settlement': 3,
+ 'education': 4,
+ 'marry': 5,
+ 'competition': 6,
+ 'give birth': 7,
+ 'assembly': 8,
+ 'movement': 9,
+ 'performance': 10,
+ 'meet': 11,
+ 'military': 12,
+ 'justice': 13,
+ 'campaign': 14,
+ 'start org': 15,
+ 'creation': 16,
+ 'other': 17,
+ 'purchase and sell': 18,
+ 'accident': 19,
+ 'injure and illness': 20,
+ 'exhibition': 21,
+ 'attack': 22,
+'divorce': 23
+ }
 
 def get_number_of_verbs(sentence:str):
     text = word_tokenize(sentence)
