@@ -9,7 +9,9 @@ from transformers import BertTokenizer, BertModel
 from torch_geometric.nn import GATConv
 import torch
 
+# your bert model path
 bert_path = "/root/data/jupyter/utils/nlp/model_params/bert-base-cased/"
+
 class BERTGCNModel(nn.Module):
     def __init__(self, num_classes, gcn_hidden_dim):
         super(BERTGCNModel, self).__init__()
@@ -25,7 +27,9 @@ class BERTGCNModel(nn.Module):
 
     def forward(self, input_ids, attention_mask, custom_mask, graph, sub_graph):
         # note that the edge index have been switched since we load the data in dataloader
+        # the edge index of the graph
         edge_index = graph.edge_index
+        # the edge index of the subgraph
         sub_edge_index = sub_graph.edge_index
         # sub_edge_index = custom_index(custom_mask, edge_index)
 
@@ -40,6 +44,7 @@ class BERTGCNModel(nn.Module):
         graph_feats = embeddings.view(input_ids.size()[0] * 86, 768)
         core_graph_feats = core_embeddings.view(input_ids.size()[0] * 86, 768)
         # Pass embeddings through GCN layers
+        # again note that from the dataloader, the embedding parameters are switched
         x = self.gcn1(graph_feats, edge_index)
         x = torch.relu(x)
         # x = self.dropout(x)
@@ -59,6 +64,7 @@ class BERTGCNModel(nn.Module):
         x = x.view(input_ids.size()[0], 86, self.gcn_hidden_dim)
         x1 = x1.view(input_ids.size()[0], 86, self.gcn_hidden_dim)
 
+        # max pool is used to get the graph embedding
         max_pool_dim1, max_pool_indices_dim1 = torch.max(x, dim=1, keepdim=True)
         max_pool_dim1 = max_pool_dim1.squeeze(1)
 
