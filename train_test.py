@@ -32,6 +32,7 @@ for epoch in range(50):
     model.train()
     print("Epoch : #", epoch + 1)
     for idx, row in enumerate(train_loader):
+        # the order of the attention_mask and costm_mask is different in dataloader 
         graph, sub_graph, input_ids, attention_mask, costm_mask = row
         input_ids = input_ids.squeeze(1).to(device)
         attention_mask = attention_mask.squeeze(1).to(device)
@@ -40,6 +41,7 @@ for epoch in range(50):
         sub_graph = sub_graph.to(device)
         y = graph.y.to(device)
         output, gcn_feats = model(input_ids, attention_mask, costm_mask, graph, sub_graph)
+        # contrastive loss
         contrast_loss = contrastive_loss(0.1, gcn_feats.cpu().detach().numpy(), y)
         ce_loss = criterion(output, y)
         loss = 0.9 * contrast_loss + 0.1 * ce_loss
@@ -56,7 +58,8 @@ for epoch in range(50):
     total_pred = []
     total_labels = []
     total_source = []
-    for idx, row in enumerate(test_loader):
+    for idx, row in enumerate(test_loader):       
+        # the order of the attention_mask and costm_mask is different in dataloader 
         graph, sub_graph, input_ids, attention_mask, costm_mask = row
         input_ids = input_ids.squeeze(1).to(device)
         attention_mask = attention_mask.squeeze(1).to(device)
