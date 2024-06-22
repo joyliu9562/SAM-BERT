@@ -35,7 +35,7 @@ class MyOwnDataset_Train(Dataset):
         graph = torch.load(f'./data/unbalance_aug/processed/graph_{idx}.pt')
         sub_graph = torch.load(f'./data/unbalance_aug/processed/sub_graph_{idx}.pt')
 
-
+        # here is custom first and attention second
         return graph, sub_graph, input_ids, custom_attention_mask, attention_mask
 
 class MyOwnDataset_Test(Dataset):
@@ -70,5 +70,5 @@ class MyOwnDataset_Test(Dataset):
         # attention_mask = tokens['attention_mask']
         graph = torch.load(f'./data/unbalance_aug/processed/graph_{idx}.pt')
         sub_graph = torch.load(f'./data/unbalance_aug/processed/sub_graph_{idx}.pt')
-
+        # here is custom first and attention second
         return graph, sub_graph, input_ids, custom_attention_mask, attention_mask
