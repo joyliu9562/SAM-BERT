@@ -19,7 +19,7 @@ train_set = MyOwnDataset_Train(root='./data/unbalance_aug/', file_dic=file_dic)
 test_set = MyOwnDataset_Test(root='./data/unbalance_aug/', file_dic=file_dic)
 train_loader = DataLoader(train_set, batch_size=32, shuffle=True)
 test_loader = DataLoader(test_set, batch_size=16, shuffle=False)
-model = BERTGCNModel(23, 256).to(device)
+model = BERTGCNModel(24, 256).to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.00001, weight_decay=1e-4)
 
